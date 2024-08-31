@@ -12,22 +12,55 @@ import { Button } from "@/components/ui/button";
 // import { Input } from "@/components/ui/input";
 // import { Textarea } from "@/components/ui/textarea";
 import { chatSession } from "@/utils/GeminiAIModel";
+import { MockInterview } from "@/utils/schema";
+import {v4 as uuid4} from 'uuid';
+import { db } from "@/utils/db";
+import { useUser } from "@clerk/nextjs";
+import moment from 'moment';
+import { useRouter } from "next/navigation";
 
 const AddNewInterview = () => {
   const [openDialog, setOpenDialog] = useState(false);
     const [jobPosition,setJobPosition]=useState();
     const [jobDesc,setJobDesc] = useState();
     const [jobExperience,setJobExperience]= useState();
+    const [loading,setLoading] = useState(false);
+    const [jsonResponse,setJsonResponse] = useState([]);
+    const{user} = useUser();
+    const router = useRouter();
+
 
     const onSubmit=async(e)=>{
         e.preventDefault();
-        console.log("job khvbjhadh")
         const InputPrompt = "Job position:" +jobPosition+" ,job Description :" +jobDesc +" ,Years of Experience:" +jobExperience +" Depends on this information please give me five interview question and answer in json format give question and answer as fiels in json  format";
-
         const result=await chatSession.sendMessage(InputPrompt);
         const MockJsonResp = (result.response.text()).replace('```json','').replace('```','')
         console.log(JSON.parse(MockJsonResp));
+        setJsonResponse(MockJsonResp);
+        // console.log(MockJsonResp)
 
+      if(MockJsonResp)
+      {
+      const resp=await db.insert(MockInterview)
+      .values({
+        mockId:uuid4(),
+        jsonMockResp:MockJsonResp,
+        jobPosition:jobPosition,
+        jobDesc:jobDesc,
+        jobExperience:jobExperience,
+        createdBy:user?.primaryEmailAddress?.emailAddress,
+        createdAt:moment().format('DD-MM-YYYY')
+      }).returning({mockId:MockInterview.mockId})
+      console.log("Inserted ID: ",resp);
+      if(resp){
+        setOpenDialog(false);
+        router.push('/dashboard/interview/'+resp[0]?.mockId)
+      }
+    }
+    else{
+      console.log("Error inserting mock interview");
+    }
+        setLoading(false);
 
     }
 
@@ -90,7 +123,7 @@ const AddNewInterview = () => {
                 </div>
                 <div>
                 <Button type="button" varient="ghost" onClick={()=>setOpenDialog(false)}>Cancle</Button>
-                <Button>Start Interview</Button>
+                <Button type="submit" className='animate-spin' disable={loading}> {loading?<><LoadingCircle>'Generating From AI'</>:'Start  Iterview' }</Button>
               </div>
               </form>
                */}
