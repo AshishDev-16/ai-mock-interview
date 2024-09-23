@@ -33,7 +33,7 @@ function AddNewInterview() {
   const onSubmit=async(e)=>{
     setLoading(true)
     e.preventDefault();
-    const InputPrompt = "Job position:" +jobPosition+" ,job Description :" +jobDesc +" ,Years of Experience:" +jobExperience +" Depends on this information please give me 5 interview question and answer in json format give question and answer as fiels in json  format";
+    const InputPrompt = "Job position:" +jobPosition+" ,job Description :" +jobDesc +" ,Years of Experience:" +jobExperience +" Depends on this information please give me 5 interview question and answer in json format give question and answer as fiels in json  format "+" do not include any character that will later cause error while parsing the JSON file ";
     const result=await chatSession.sendMessage(InputPrompt);
     const MockJsonResp = (result.response.text()).replace('```json','').replace('```','')
     // console.log(JSON.parse(MockJsonResp));
