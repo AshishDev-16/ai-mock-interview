@@ -5,9 +5,11 @@ import LandingPage from "./Landing/page";
 
 export default function Home() {
   return (
-    <div>
+    
+    <div className="">
       <Header/>
       <LandingPage/>
     </div>
+    
   );
 }

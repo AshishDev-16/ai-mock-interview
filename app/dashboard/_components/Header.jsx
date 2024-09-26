@@ -28,7 +28,10 @@
             Questions</li>
 
           <li className={`hover:text-primary hover:font-bold transition-all cursor-pointer ${path == '/dashboard/upgrade' && 'text-primary font-bold'}`}>
-            Upgrade</li>
+          <Link href={""}>
+            Upgrade
+            </Link>
+            </li>
 
           <li className={`hover:text-primary hover:font-bold transition-all cursor-pointer ${path == '/dashboard/how' && 'text-primary font-bold'}`}>
             How it works?</li>
