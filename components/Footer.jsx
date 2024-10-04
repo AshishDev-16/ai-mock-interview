@@ -14,7 +14,7 @@ export default function Footer() {
           </div>
           <div className="flex flex-col items-center md:items-end">
             <p className="flex items-center mb-2">
-              Made with <Heart className="h-4 w-4 mx-1 text-red-500" /> Love
+              Made with <Heart className="h-4 w-4 mx-1 text-red-500" /> @MIT-WPU
             </p>
             <a href="mailto:contact@interviewpro.com" className="hover:underline">
               contact@interviewpro.com
