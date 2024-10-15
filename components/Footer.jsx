@@ -1,24 +1,26 @@
 import React from 'react'
 import { Heart } from 'lucide-react'
 
-export default function Footer() {
+export default function Component() {
   return (
-    <footer className=" py-6">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-4 md:mb-0">
-            <h2 className="text-2xl font-serif font-bold">Interview Pro</h2>
+    <footer className=" py-4 px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto max-w-7xl">
+        <div className="flex justify-between items-center">
+          <div className="text-left">
+            <h2 className="text-xl font-serif font-bold text-gray-800">Interview Pro</h2>
           </div>
-          <div className="mb-4 md:mb-0 text-center">
-            <p>&copy; 2024 Interview Pro</p>
+          
+          {/* Hidden on small screens, visible on medium and up */}
+          <div className=" sm:block text-center">
+            <p className="text-sm text-gray-600">&copy; {new Date().getFullYear()}All rights reserved.</p>
           </div>
-          <div className="flex flex-col items-center md:items-end">
-            <p className="flex items-center mb-2">
-              Made with <Heart className="h-4 w-4 mx-1 text-red-500" /> @MIT-WPU
-            </p>
-            <a href="mailto:contact@interviewpro.com" className="hover:underline">
-              contact@interviewpro.com
-            </a>
+          
+          <div className="flex items-center">
+            {/* <p className="flex items-center text-sm text-gray-600">
+              Made with <Heart className="h-4 w-4 mx-1 text-red-500" />
+            </p> */}
+            {/* Hidden on small screens, visible on medium and up */}
+            <span className="hidden sm:inline ml-1 text-sm text-gray-600">@MIT-WPU</span>
           </div>
         </div>
       </div>
