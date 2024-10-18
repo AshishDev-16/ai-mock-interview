@@ -1,3 +1,4 @@
+
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import React from 'react'
@@ -13,7 +14,7 @@ function InterviewItemCard({interview}){
   }
   
   return (
-    <div className="border shadow-sm rounded-lg p-3">
+    <div className="border-2 shadow-lg rounded-lg p-3">
       <h2 className="font-bol text-primary">Job Position:{interview?.jobPosition}</h2>
       <h2 className="text-sm text-gray-600">{interview?.jobExperience} Years of Experience</h2>
       <h2 className="text-xs text-gray-400">Created At : {interview?.createdAt}</h2>

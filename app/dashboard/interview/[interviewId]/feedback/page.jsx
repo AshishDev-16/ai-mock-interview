@@ -52,14 +52,14 @@ function Feedback({ params }) {
                     <h2 className="text-3xl font-bold text-green-500">Congratulation!</h2>
 
                     <h2 className="font-bold text-2xl">Here is your interview feedback</h2>
-                    {totalRating < 5 ?
+                    {totalRating < 10 ?
                         <h2 className="text-red-500 text-lg my-3">Your overall interview rating:<strong>
-                            {totalRating}/10
+                            {totalRating}/25
                         </strong></h2>
                         :
                         <>
                             <h2 className="text-green-500 text-lg my-3">Your overall interview rating:<strong>
-                                {totalRating}/10
+                                {totalRating}/25
                             </strong></h2>
                         </>}
 

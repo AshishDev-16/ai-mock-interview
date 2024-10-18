@@ -33,34 +33,70 @@ function AddNewInterview() {
   const onSubmit=async(e)=>{
     setLoading(true)
     e.preventDefault();
-    const InputPrompt = "Job position:" +jobPosition+" ,job Description :" +jobDesc +" ,Years of Experience:" +jobExperience +" Depends on this information please give me 5 interview question and answer in json format give question and answer as fiels in json  format "+" do not include any character that will later cause error while parsing the JSON file ";
-    const result=await chatSession.sendMessage(InputPrompt);
-    const MockJsonResp = (result.response.text()).replace('```json','').replace('```','')
-    // console.log(JSON.parse(MockJsonResp));
-    setJsonResponse(MockJsonResp);
-    // console.log(MockJsonResp)
+    
+    const InputPrompt = `Generate 5 interview questions and answers for the following job:
 
-  if(MockJsonResp)
-  {
-  const resp=await db.insert(MockInterview)
-  .values({
-    mockId:uuid4(),
-    jsonMockResp:MockJsonResp,
-    jobPosition:jobPosition,
-    jobDesc:jobDesc,
-    jobExperience:jobExperience,
-    createdBy:user?.primaryEmailAddress?.emailAddress,
-    createdAt:moment().format('DD-MM-YYYY')
-  }).returning({mockId:MockInterview.mockId})
-  console.log("Inserted ID: ",resp);
-  if(resp){
-    setOpenDialog(false);
-    router.push('/dashboard/interview/'+resp[0]?.mockId)
-  }
-}
-else{
-  console.log("Error inserting mock interview");
-}
+    Job Position: ${jobPosition}
+    Job Description: ${jobDesc}
+    Years of Experience: ${jobExperience}
+    
+    Please provide the output as a valid JSON array of objects. Each object should have 'question' and 'answer' fields. Do not include any markdown formatting, code blocks, or additional explanations. The JSON should be directly parseable.
+    
+    Example format:
+    [
+      {
+        "question": "Sample question here?",
+        "answer": "Sample answer here."
+      },
+      {
+        "question": "Another sample question?",
+        "answer": "Another sample answer."
+      }
+    ]
+    
+    Ensure that:
+    1. All quotes are properly escaped.
+    2. There are no trailing commas.
+    3. Newlines within answers use \\n for line breaks.
+    4. No markdown formatting (like **, __, or \`) is used.
+    5. The output is a single, valid JSON array.`;
+
+    const result = await chatSession.sendMessage(InputPrompt);
+    let MockJsonResp = result.response.text().trim();
+  
+
+    // Attempt to parse and re-stringify to ensure valid JSON
+    try {
+      MockJsonResp = JSON.stringify(JSON.parse(MockJsonResp));
+    } catch (error) {
+      console.error("Error parsing AI response:", error);
+      // Handle the error appropriately, maybe set an error state or retry
+    }
+
+    // At this point, MockJsonResp should be a valid JSON string
+    setJsonResponse(MockJsonResp);
+
+    if(MockJsonResp)
+    {
+    const resp=await db.insert(MockInterview)
+    .values({
+      mockId:uuid4(),
+      jsonMockResp:MockJsonResp,
+      jobPosition:jobPosition,
+      jobDesc:jobDesc,
+      jobExperience:jobExperience,
+      createdBy:user?.primaryEmailAddress?.emailAddress,
+      createdAt:moment().format('DD-MM-YYYY')
+    }).returning({mockId:MockInterview.mockId})
+    console.log("Inserted ID: ",resp);
+    if(resp){
+      setOpenDialog(false);
+      router.push('/dashboard/interview/'+resp[0]?.mockId)
+    }
+    }
+    else{
+      console.log("Error inserting mock interview");
+    }
     setLoading(false);
   }
   return (

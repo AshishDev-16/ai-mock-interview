@@ -1,14 +1,16 @@
 "use client"
 import { useAuth } from "@clerk/nextjs";
+import { RainbowButton } from '@/components/magicui/RainbowButton'
 import Link from "next/link";
 import TypewriterComponent from "typewriter-effect";
 import { Button } from "./ui/button";
+import { DiGithubBadge } from "react-icons/di";
 import React from 'react'
 
 function Hero() {
     const { isSignedIn } = useAuth();
     return (
-        <div className="text-primary font-bold py-36 text-center space-y-5">
+        <div className="text-primary font-bold py-32 text-center space-y-5">
             <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl space-y-5 font-extrabold">
                 <h1>
                     The Best AI Tool for
@@ -41,6 +43,12 @@ function Hero() {
             <div className="text-zinc-400 text-xs md:text-sm font-normal">
                 No credit card required
             </div>
+            <RainbowButton>
+              <Link className="flex items-center gap-1 text-sm" href={"https://github.com/AshishDev-16/ai-mock-interview/tree/master"}>
+                <DiGithubBadge size={20} />
+                Star on Github
+              </Link>
+            </RainbowButton>
         </div>
     )
 }

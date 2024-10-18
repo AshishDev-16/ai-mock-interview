@@ -2,6 +2,7 @@ import { Video } from 'lucide-react'
 import React from 'react'
 import { Button } from './ui/button'
 import Image from 'next/image'
+import Link from 'next/link'
 
 function How() {
   return (
@@ -13,7 +14,9 @@ function How() {
         <div className="text-left font-serif order-2 md:order-1">
           <h2 className="py-2 text-black text-xl sm:text-2xl font-extrabold">Choose the Position & Role 🔎</h2>
           <h2 className="pb-4 text-base sm:text-lg">We optimize the interview prep experience according to which job Role and Position you're interested in interviewing for.</h2>
+        <Link href={"/dashboard"}>
           <Button className="w-full sm:w-auto">Try Now</Button>
+        </Link>
         </div>
         <div className="border-2 shadow-lg rounded-lg h-48 sm:h-64 md:h-[40vh] relative overflow-hidden order-1 md:order-2">
           <Image 
@@ -37,7 +40,9 @@ function How() {
         <div className="text-left font-serif">
           <h2 className="py-2 text-black text-xl sm:text-2xl font-extrabold">Submit Your Answer, Get Feedback 🗣️</h2>
           <h2 className="pb-4 text-base sm:text-lg">Get realtime feedback on how you answered each question. We'll even tell you how you can improve answering this question the next time around.</h2>
-          <Button className="w-full sm:w-auto">Try Now</Button>
+          <Link href={"/dashboard"}>
+            <Button className="w-full sm:w-auto">Try Now</Button>
+          </Link>
         </div>
       </div>
     </div>

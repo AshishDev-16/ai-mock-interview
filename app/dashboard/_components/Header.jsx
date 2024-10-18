@@ -1,5 +1,7 @@
   "use client"
-  import { UserButton, useUser } from '@clerk/nextjs'
+
+import { Button } from '@/components/ui/button'
+  import { SignInButton, UserButton, useUser } from '@clerk/nextjs'
   import { User } from 'lucide-react'
   import Image from 'next/image'
   import Link from 'next/link'
@@ -36,6 +38,8 @@
           <li className={`hover:text-primary hover:font-bold transition-all cursor-pointer ${path == '/dashboard/how' && 'text-primary font-bold'}`}>
             How it works?</li>
 
+
+
         </ul>
         {isSignedIn?
         <UserButton 
@@ -43,16 +47,21 @@
         />
         :
         <div className="flex items-center space-x-4">
-        <Link
+        {/* <Link
             href="/sign-in"
             className="flex items-center space-x-1 hover:text-primary hover:font-bold transition-all cursor-pointer"
-          >
+          > */}
+          <SignInButton mode='modal'>
+            <Button variant={'ghost'}>
             <User className="w-5 h-5" />
-            <span className="hidden sm:inline">Login</span>
-          </Link>
+              Login
+              </Button>
+
+          </SignInButton>
+          
         </div>}
       </div>
     )
   }
 
-  export default Header
+  export default Header 
