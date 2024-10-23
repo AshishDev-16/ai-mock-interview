@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from 'react'
 import { ChevronDown, ChevronUp } from "lucide-react"
+import AnimateOnScroll from './AnimateOnScroll'
 
 const questions = [
   {
@@ -34,32 +35,36 @@ export default function Question() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
-      <h1 className="text-5xl font-serif font-extrabold text-center mb-2">
-        Frequently asked questions🤔
-      </h1>
-      <p className="text-center text-gray-600 font-serif mb-8">Don't worry, we've got you covered</p>
+      <AnimateOnScroll>
+        <h1 className="text-5xl font-serif font-extrabold text-center mb-2">
+          Frequently asked questions🤔
+        </h1>
+        <p className="text-center text-gray-600 font-serif mb-8">Don't worry, we've got you covered</p>
+      </AnimateOnScroll>
       
       {questions.map((item, index) => (
-        <div key={index} className=" border-t border-b ">
-          <button
-            onClick={() => toggleQuestion(index)}
-            className="w-full text-left"
-          >
-            <div className="flex justify-between items-center p-2 bg-white hover:bg-purple-50 transition-colors duration-200">
-              <span className="font-medium font-serif  text-xl">{item.Question}</span>
-              {openIndex === index ? (
-                <ChevronUp className="h-6 w-6 " />
-              ) : (
-                <ChevronDown className="h-6 w-6 " />
-              )}
-            </div>
-          </button>
-          {openIndex === index && (
-            <div className="p-2 text-gray-700 font-serif  text-base">
-              {item.Ans}
-            </div>
-          )}
-        </div>
+        <AnimateOnScroll key={index}>
+          <div className=" border-t border-b ">
+            <button
+              onClick={() => toggleQuestion(index)}
+              className="w-full text-left"
+            >
+              <div className="flex justify-between items-center p-2 bg-white hover:bg-purple-50 transition-colors duration-200">
+                <span className="font-medium font-serif  text-xl">{item.Question}</span>
+                {openIndex === index ? (
+                  <ChevronUp className="h-6 w-6 " />
+                ) : (
+                  <ChevronDown className="h-6 w-6 " />
+                )}
+              </div>
+            </button>
+            {openIndex === index && (
+              <div className="p-2 text-gray-700 font-serif  text-base">
+                {item.Ans}
+              </div>
+            )}
+          </div>
+        </AnimateOnScroll>
       ))}
     </div>
   )

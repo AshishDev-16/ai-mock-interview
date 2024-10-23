@@ -4,7 +4,7 @@ import InterviewList from './_components/InterviewList'
 
 function Dashboard() {
   return (
-    <div className='p-10'>
+    <div className='p-10 pt-32'>
     <h2 className='font-bold text-2xl'>Dashboard</h2>
     <h2 className='text-grey-500'>Create and Start your AI Mockup Interview</h2>
     

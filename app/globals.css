@@ -96,6 +96,15 @@
   filter: invert(1);
 }
 
+.glassmorphism {
+  backdrop-filter: blur(11px) saturate(127%);
+  -webkit-backdrop-filter: blur(11px) saturate(127%);
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  border: 1px solid rgba(209, 213, 219, 0.3);
+} 
+
+
 @layer base {
   * {
     @apply border-border;
@@ -103,4 +112,43 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+
+@keyframes textReveal {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.animate-text-reveal {
+  display: inline-block;
+  animation: textReveal 1.5s cubic-bezier(0.77, 0, 0.175, 1) 0.5s forwards;
+}
+
+.animate-text-reveal > * {
+  display: inline-block;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in-out 1.5s forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Add this at the end of your globals.css file */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
 }

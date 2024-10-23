@@ -1,17 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="300" height="100" viewBox="0 0 300 100">
-    <!-- Background -->
-    <rect width="300" height="100" fill="#f5f5f5" rx="10" ry="10" />
-
     <!-- Microphone icon -->
-    <g transform="translate(30, 30) scale(0.7)">
-        <rect x="35" y="5" width="30" height="60" rx="15" ry="15" fill="#4845D2" />
-        <path d="M25 70 L75 70 Q80 70 80 75 L80 85 Q80 90 75 90 L25 90 Q20 90 20 85 L20 75 Q20 70 25 70 Z" fill="#4845D2" />
-        <rect x="45" y="90" width="10" height="10" fill="#4845D2" />
+    <g transform="translate(10, 20) scale(0.6)">
+        <rect x="35" y="5" width="30" height="60" rx="15" ry="15" fill="#ffffff" />
+        <path d="M25 70 L75 70 Q80 70 80 75 L80 85 Q80 90 75 90 L25 90 Q20 90 20 85 L20 75 Q20 70 25 70 Z" fill="#ffffff" />
+        <rect x="45" y="90" width="10" height="10" fill="#ffffff" />
     </g>
 
     <!-- Text -->
-    <text x="108" y="53" font-family="Arial, sans-serif" font-size="43" font-weight="bold" fill="#2c3e50">Interview</text>
-    <text x="108" y="85" font-family="Arial, sans-serif" font-size="43" font-weight="bold" fill="#4845D2">Pro</text>
-
-    
+    <text x="85" y="55" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#ffffff">Interview</text>
+    <text x="85" y="90" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#ffffff">Pro</text>
 </svg>

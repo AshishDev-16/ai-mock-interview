@@ -13,7 +13,7 @@ function LandingPage() {
     <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-lg border bg-background p-20 md:shadow-xl">
       <GridPattern
         numSquares={30}
-        maxOpacity={0.2}
+        maxOpacity={0.5}
         duration={1}
         repeatDelay={1}
         className={cn(
@@ -31,5 +31,4 @@ function LandingPage() {
     </div>
   )
 }
-
 export default LandingPage
