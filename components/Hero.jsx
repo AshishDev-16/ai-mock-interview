@@ -14,10 +14,10 @@ function Hero() {
         <AnimateOnScroll>
             <div id="dashboard" className="text-primary font-bold py-32 text-center space-y-5 glassmorphism">
                 <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl space-y-5 font-extrabold">
-                    <h1 className="">
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold bg-gradient-to-r from-indigo-500 via-purple-500 to-primary bg-clip-text text-transparent font-serif">
                         The Best AI Tool for
                     </h1>
-                    <div className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-primary">
+                    <div className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-primary font-serif">
                         <TypewriterComponent
                             options={{
                                 strings: [
@@ -57,3 +57,4 @@ function Hero() {
 }
 
 export default Hero
+    

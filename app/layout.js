@@ -6,7 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Interview.io",
+  title: "Interview Pro",
   description: "An Ai based Mock Interview Application.",
 };
 

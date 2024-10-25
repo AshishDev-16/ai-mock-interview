@@ -34,32 +34,32 @@ export default function Question() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
+    <div className="max-w-5xl mx-auto px-6 py-16 ">
       <AnimateOnScroll>
-        <h1 className="text-5xl font-serif font-extrabold text-center mb-2">
-          Frequently asked questions🤔
+        <h1 className="text-6xl font-serif font-extrabold text-center mb-4 text-gray-900">
+          Frequently Asked Questions
         </h1>
-        <p className="text-center text-gray-600 font-serif mb-8">Don't worry, we've got you covered</p>
+        <p className="text-center text-gray-600 font-serif mb-12 text-lg">Curious about something? We've got answers!</p>
       </AnimateOnScroll>
       
       {questions.map((item, index) => (
         <AnimateOnScroll key={index}>
-          <div className=" border-t border-b ">
+          <div className="mb-4 bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 ease-in-out hover:shadow-xl">
             <button
               onClick={() => toggleQuestion(index)}
-              className="w-full text-left"
+              className="w-full text-left focus:outline-none"
             >
-              <div className="flex justify-between items-center p-2 bg-white hover:bg-purple-50 transition-colors duration-200">
-                <span className="font-medium font-serif  text-xl">{item.Question}</span>
+              <div className="flex justify-between items-center p-4 bg-white hover:bg-purple-100 transition-colors duration-200">
+                <span className="font-bold font-serif text-xl text-gray-800">{item.Question}</span>
                 {openIndex === index ? (
-                  <ChevronUp className="h-6 w-6 " />
+                  <ChevronUp className="h-6 w-6 text-purple-600" />
                 ) : (
-                  <ChevronDown className="h-6 w-6 " />
+                  <ChevronDown className="h-6 w-6 text-purple-600" />
                 )}
               </div>
             </button>
             {openIndex === index && (
-              <div className="p-2 text-gray-700 font-serif  text-base">
+              <div className="p-4 text-gray-700 font-serif text-lg bg-purple-50">
                 {item.Ans}
               </div>
             )}
