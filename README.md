@@ -3,7 +3,6 @@
 An intelligent interview preparation platform that helps users practice and improve their interviewing skills using AI-powered feedback and analysis.
 
 ![Hero Section Screenshot](public/screenshots/hero.png)
-*(Add a screenshot of your hero section with the animated background)*
 
 ## ✨ Features
 
@@ -81,7 +80,3 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
