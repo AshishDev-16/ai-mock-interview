@@ -1,75 +1,134 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import AnimateOnScroll from './AnimateOnScroll'
+import { Card, CardContent } from "./ui/card";
+import { motion } from "framer-motion";
+import { 
+  History, 
+  Zap, 
+  BrainCircuit, 
+  Target, 
+  Smartphone, 
+  Sparkles 
+} from "lucide-react";
 
-
-const testimonials = [
-
+const features = [
     {
-
-        "title": "Saved Transcripts 🗣️",
-        "description": "All of your interviews are transcribed and saved for future reference"
+        "title": "Saved Transcripts",
+        "description": "All of your interviews are transcribed and saved for future reference.",
+        "icon": <History className="w-6 h-6 text-primary" />
     },
     {
-
-        "title": "Realtime Transcriptions 🕰️",
-        "description": "Our transcriptions have a latency of less than 2 seconds, ensuring that the AI keeps up with the conversation"
+        "title": "Realtime Transcriptions",
+        "description": "Our transcriptions have a latency of less than 2 seconds, keeping the AI in sync.",
+        "icon": <Zap className="w-6 h-6 text-secondary" />
     },
     {
-
-        "title": "AI learns over time 🧠",
-        "description": "Our AI is constantly learning from successful interviews so that you increase your chances of getting the offer extended email"
+        "title": "AI Growth Engine",
+        "description": "Our model learns from successful patterns to boost your 'selection' probability.",
+        "icon": <BrainCircuit className="w-6 h-6 text-primary" />
     },
     {
-
-        "title": "Position-optimized interview questions 🪮",
-        "description": "We optimize the interview questions and process according to which role/position you're interviewing for."
+        "title": "Role-Specific Precision",
+        "description": "Interview questions are dynamically optimized for your chosen position and role.",
+        "icon": <Target className="w-6 h-6 text-secondary" />
     },
     {
-
-        "title": "Multi-device 📱💻",
-        "description": "Interview Pro is designed to be used by your phone, computer, or tablet"
+        "title": "Cross-Device Mastery",
+        "description": "Prepare on any screen. Optimized for mobile, tablet, and desktop experiences.",
+        "icon": <Smartphone className="w-6 h-6 text-primary" />
     },
     {
-
-        "title": "Coming soon...😉",
-        "description": "We're just getting started! Check back in as our team is continually adding features"
+        "title": "Kinetic Feedback",
+        "description": "Receive tactical insights and score breakdowns to refine your performance.",
+        "icon": <Sparkles className="w-6 h-6 text-secondary" />
     },
-
 ]
+
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1
+        }
+    }
+};
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.6,
+            ease: "easeOut"
+        }
+    }
+};
 
 function Features() {
     return (
-        <div id="features" className="px-4 sm:px-6 md:px-10 py-16 sm:py-24 md:py-32">
-            <AnimateOnScroll>
-                <h2 className="text-center text-3xl sm:text-4xl md:text-5xl text-gray-800 font-serif font-bold mb-6 sm:mb-8 md:mb-12">
-                    Our Features
-                </h2>
-                <p className="text-center text-base sm:text-lg text-gray-600 font-serif max-w-3xl mx-auto mb-12 sm:mb-16 md:mb-20">
-                    Enhance your interview preparation with our innovative tools designed to give you the competitive edge.
-                </p>
-            </AnimateOnScroll>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {testimonials.map((item) => (
-                    <AnimateOnScroll key={item.title}>
-                        <Card className="bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300 h-full flex flex-col">
-                            <CardHeader className="border-b border-gray-100 p-6">
-                                <CardTitle className="flex items-center gap-x-3 text-xl font-semibold text-gray-800">
-                                    <span className="text-2xl">{item.title.split(' ').pop()}</span>
-                                    <p>{item.title.split(' ').slice(0, -1).join(' ')}</p>
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent className="p-6 flex-grow flex items-center">
-                                <p className="text-gray-600 font-serif text-base">
-                                    {item.description}
-                                </p>
-                            </CardContent>
-                        </Card>
-                    </AnimateOnScroll>
-                ))}
+        <section id="features" className="relative px-6 py-24 sm:py-32 overflow-hidden">
+            {/* Background Accent */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[300px] bg-primary/5 blur-[120px] rounded-[100%] pointer-events-none" />
+
+            <div className="max-w-7xl mx-auto space-y-20 relative z-10">
+                <div className="text-center space-y-4">
+                    <motion.span 
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        className="text-primary font-bold tracking-widest text-xs uppercase"
+                    >
+                        Tactical Edge
+                    </motion.span>
+                    <motion.h2 
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        className="text-4xl md:text-6xl font-black tracking-tight text-foreground"
+                    >
+                        UNFAIR <span className="italic text-primary">ADVANTAGE</span>.
+                    </motion.h2>
+                    <motion.p 
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        className="text-foreground/50 text-lg max-w-2xl mx-auto font-medium"
+                    >
+                        Don&apos;t just prepare—simulate. Our tactical engine gives you the exact tools used by elite candidates to dominate interviews.
+                    </motion.p>
+                </div>
+
+                <motion.div 
+                    variants={containerVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                >
+                    {features.map((item, idx) => (
+                        <motion.div key={idx} variants={itemVariants}>
+                            <Card className="group relative bg-white/5 border-white/10 hover:border-primary/50 backdrop-blur-md transition-all duration-500 h-full overflow-hidden">
+                                {/* Subtle Hover Glow */}
+                                <div className="absolute -inset-2 bg-primary/20 opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-500 rounded-full h-20 w-20 top-0 left-0" />
+                                
+                                <CardContent className="p-8 space-y-6 relative z-10">
+                                    <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-primary/10 group-hover:border-primary/30 transition-all duration-500">
+                                        {item.icon}
+                                    </div>
+                                    <div className="space-y-2">
+                                        <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
+                                            {item.title}
+                                        </h3>
+                                        <p className="text-foreground/60 leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
+                                            {item.description}
+                                        </p>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </motion.div>
+                    ))}
+                </motion.div>
             </div>
-        </div>
+        </section>
     )
 }
 

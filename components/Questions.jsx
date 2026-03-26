@@ -1,71 +1,101 @@
 "use client"
 import React, { useState } from 'react'
-import { ChevronDown, ChevronUp } from "lucide-react"
-import AnimateOnScroll from './AnimateOnScroll'
+import { ChevronDown, HelpCircle } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
 
-const questions = [
+const faqData = [
   {
-    Question: "How are your interview prep questions optimized for each job?",
-    Ans: "We spent a long time coming up with questions that each company would be likely to ask!"
+    question: "How are the interview vectors optimized per role?",
+    answer: "Our engine uses specific industry benchmarks and job descriptions to generate high-fidelity technical and behavioral probes tailored to your target position."
   },
   {
-    Question: "Which device can I use Interview Pro with?",
-    Ans: "You can use Interview Sidekick on various devices including desktop computers, laptops, tablets, and smartphones."
+    question: "Which hardware is compatible with the protocol?",
+    answer: "The platform is fully optimized for all modern environments including desktop workstations, tablets, and mobile devices."
   },
   {
-    Question: "How will this help when it comes to my interview?",
-    Ans: "Interview Pro provides tailored preparation, boosting your confidence and performance in interviews."
+    question: "How does real-time analysis improve performance?",
+    answer: "By providing instant feedback on metrics such as technical accuracy, sentiment, and delivery, users can iterate and refine their response patterns in a live simulated environment."
   },
   {
-    Question: "Is this tool free?",
-    Ans: "We offer both free and premium features. Free for now"
+    question: "Is there a trial phase available?",
+    answer: "We currently provide a tiered access model, including a fully functional free session to test the core AI vectors."
   },
   {
-    Question: "Will the AI be quick?",
-    Ans: "Yes, our AI is designed to provide quick and efficient responses to your queries."
+    question: "What is the latency of the feedback engine?",
+    answer: "The AI processing cycle is sub-2 seconds, ensuring a seamless, high-velocity interaction that mimics real interview pressures."
   }
 ]
 
-export default function Question() {
+export default function Questions() {
   const [openIndex, setOpenIndex] = useState(null)
 
-  const toggleQuestion = (index) => {
-    setOpenIndex(openIndex === index ? null : index)
-  }
-
   return (
-    <div className="max-w-5xl mx-auto px-6 py-16 ">
-      <AnimateOnScroll>
-        <h1 className="text-6xl font-serif font-extrabold text-center mb-4 text-gray-900">
-          Frequently Asked Questions
-        </h1>
-        <p className="text-center text-gray-600 font-serif mb-12 text-lg">Curious about something? We've got answers!</p>
-      </AnimateOnScroll>
-      
-      {questions.map((item, index) => (
-        <AnimateOnScroll key={index}>
-          <div className="mb-4 bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 ease-in-out hover:shadow-xl">
-            <button
-              onClick={() => toggleQuestion(index)}
-              className="w-full text-left focus:outline-none"
+    <section id="questions" className="relative px-6 py-24 sm:py-32 overflow-hidden">
+      <div className="max-w-4xl mx-auto space-y-16">
+        <div className="text-center space-y-4">
+          <motion.span 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-primary font-bold tracking-widest text-xs uppercase"
+          >
+            Intelligence Base
+          </motion.span>
+          <motion.h2 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-4xl md:text-6xl font-black tracking-tight text-foreground"
+          >
+            SUPPORT <span className="italic text-primary">VECTORS</span>.
+          </motion.h2>
+        </div>
+
+        <div className="space-y-4">
+          {faqData.map((item, index) => (
+            <motion.div 
+              key={index}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="group"
             >
-              <div className="flex justify-between items-center p-4 bg-white hover:bg-purple-100 transition-colors duration-200">
-                <span className="font-bold font-serif text-xl text-gray-800">{item.Question}</span>
-                {openIndex === index ? (
-                  <ChevronUp className="h-6 w-6 text-purple-600" />
-                ) : (
-                  <ChevronDown className="h-6 w-6 text-purple-600" />
-                )}
-              </div>
-            </button>
-            {openIndex === index && (
-              <div className="p-4 text-gray-700 font-serif text-lg bg-purple-50">
-                {item.Ans}
-              </div>
-            )}
-          </div>
-        </AnimateOnScroll>
-      ))}
-    </div>
+              <button
+                onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                className={`w-full text-left p-6 rounded-2xl border transition-all duration-300 ${
+                  openIndex === index 
+                    ? "bg-white/10 border-primary/50" 
+                    : "bg-white/5 border-white/10 hover:border-white/20"
+                }`}
+              >
+                <div className="flex justify-between items-center gap-4">
+                  <div className="flex items-center gap-4">
+                    <HelpCircle className={`w-5 h-5 transition-colors ${openIndex === index ? "text-primary" : "text-foreground/40"}`} />
+                    <span className={`text-lg font-bold transition-colors ${openIndex === index ? "text-foreground" : "text-foreground/70 group-hover:text-foreground"}`}>
+                      {item.question}
+                    </span>
+                  </div>
+                  <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${openIndex === index ? "rotate-180 text-primary" : "text-foreground/40"}`} />
+                </div>
+
+                <AnimatePresence>
+                  {openIndex === index && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pt-6 text-foreground/50 leading-relaxed font-medium">
+                        {item.answer}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </button>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
   )
 }
