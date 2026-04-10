@@ -1,10 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { db } from "@/utils/db";
-import { chatSession } from "@/utils/GeminiAIModel";
-import { UserAnswer } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
-import { CirclePause, Mic, Webcam } from "lucide-react";
+import { CirclePause, Mic } from "lucide-react";
+import Webcam from "react-webcam";
 import moment from "moment";
 import { useRef } from "react";
 
@@ -21,7 +19,7 @@ function RecordAnsSection({
   const { user } = useUser();
   const [loading, setLoading] = useState();
   const [isRecordingActive, setIsRecordingActive] = useState(false);
-  const recordingTimeoutRef = useRef(null);
+  const userAnswerRef = useRef("");
 
   const {
     error,
@@ -37,104 +35,137 @@ function RecordAnsSection({
   });
 
   useEffect(() => {
-    results?.map((result) => (
-      setUserAnswer(prevAns => prevAns + result?.transcript)
-    ))
+    const combinedTranscript = results.map((result) => result.transcript).join(" ");
+    userAnswerRef.current = combinedTranscript;
+    setUserAnswer(combinedTranscript);
   }, [results]);
 
-  useEffect(() => {
-    if (!isRecording && isRecordingActive) {
-      // Restart recording if it stops unexpectedly
-      recordingTimeoutRef.current = setTimeout(() => {
-        startSpeechToText();
-      }, 1000);
-    }
-    return () => {
-      if (recordingTimeoutRef.current) {
-        clearTimeout(recordingTimeoutRef.current);
-      }
-    };
-  }, [isRecording, isRecordingActive, startSpeechToText]);
-
   const StartStopRecording = async () => {
-    if (isRecordingActive) {
+    if (isRecording) {
       stopSpeechToText();
-      setIsRecordingActive(false);
-      if (userAnswer.length > 10) {
-        await UpdateUserAnswer();
+      const currentAns = userAnswerRef.current;
+      
+      if (currentAns.length < 10) {
+        toast("Answer is too short. Please speak louder and provide a complete answer.");
+        setResults([]);
+        setUserAnswer("");
+        userAnswerRef.current = "";
+        return;
       }
+
+      await UpdateUserAnswer(currentAns);
     } else {
-      setIsRecordingActive(true);
+      setResults([]);
+      setUserAnswer("");
+      userAnswerRef.current = "";
       startSpeechToText();
     }
   };
 
-  const UpdateUserAnswer = async () => {
-    console.log(userAnswer);
+  const UpdateUserAnswer = async (finalAnswer) => {
     setLoading(true);
-    const feedbackPromopt =
-      "Question:" +
-      mockInterviewQuestion[activeQuestionIndex]?.question +
-      ", User Answer" +
-      userAnswer +
-      "Depends on question and user answer for given interview question" +
-      "please give us ratig for answer and feedback as area of improvment if any" +
-      "in just 3 to 5 lines to improve it in JSON format with rating field and feedback field";
 
-    const result = await chatSession.sendMessage(feedbackPromopt);
+    try {
+      const resp = await fetch("/api/evaluate-answer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          mockIdRef: interviewData?.mockId,
+          question: mockInterviewQuestion[activeQuestionIndex]?.question,
+          correctAns: mockInterviewQuestion[activeQuestionIndex]?.answer,
+          userAns: finalAnswer,
+        }),
+      });
 
-    const mockJsonResp = result.response
-      .text()
-      .replace("```json", "")
-      .replace("```", "");
+      const data = await resp.json();
 
-    console.log(mockJsonResp);
-
-    const JsonFeedbackResp = JSON.parse(mockJsonResp);
-
-    const resp = await db.insert(UserAnswer).values({
-      mockIdRef: interviewData?.mockId,
-      question: mockInterviewQuestion[activeQuestionIndex]?.question,
-      correctAns: mockInterviewQuestion[activeQuestionIndex]?.answer,
-      userAns: userAnswer,
-      feedback: JsonFeedbackResp?.feedback,
-      rating: JsonFeedbackResp?.rating,
-      userEmail: user?.primaryEmailAddress?.emailAddress,
-      createdAt: moment().format("DD-MM-YYYY"),
-    });
-
-    if (resp) {
-      toast("User Answer recorded successfully");
-      setUserAnswer("");
+      if (resp.ok && data.success) {
+        toast("User Answer recorded successfully");
+        setUserAnswer("");
+        userAnswerRef.current = "";
+        setResults([]);
+      } else {
+        toast("Error while saving answer. Please try again.");
+        console.error("API Error: ", data.error);
+      }
+    } catch (error) {
+      console.error("Fetch Error:", error);
+      toast("System error occurred. Feed disrupted.");
+    } finally {
       setResults([]);
+      setLoading(false);
     }
-    setResults([]);
-    setLoading(false);
   };
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div className="flex flex-col mt-20 justify-center items-center bg-secondary  rounded-lg p-5">
+    <div className="flex flex-col items-center justify-center space-y-12">
+      <div className="relative w-full aspect-video rounded-sm border border-foreground/10 bg-black overflow-hidden shadow-2xl">
         <Webcam
+          mirrored={true}
+          className="w-full h-full object-cover grayscale opacity-80"
           style={{
-            height: 300,
-            width: "100%",
             zIndex: 10,
           }}
         />
-      </div>
-      <Button variant="outline" className="my-10" onClick={StartStopRecording}>
-        {isRecordingActive ? (
-          <h2 className="text-red-600 flex gap-2">
-            <CirclePause />
-            Stop Recording...
-          </h2>
-        ) : (
-          <h2 className="flex gap-2 text-primary items-center">
-            <Mic />
-            Record Answer
-          </h2>
+        <div className="absolute top-6 left-6 flex items-center gap-3 px-3 py-1.5 bg-black/60 border border-foreground/10 rounded-sm backdrop-blur-md">
+          <div
+            className={`w-1.5 h-1.5 rounded-full ${isRecording ? "bg-red-500 animate-pulse" : "bg-primary"}`}
+          />
+          <span className="text-[9px] font-black tracking-[0.2em] text-foreground/60 uppercase">
+            {isRecording
+              ? "UPLINK_ACTIVE // STREAMING"
+              : "READY_TO_DEPLOY"}
+          </span>
+        </div>
+
+        {isRecording && (
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 bg-red-500/10 border border-red-500/20 rounded-sm backdrop-blur-md">
+            <span className="text-[10px] font-black tracking-[0.3em] text-red-500 uppercase">
+              Input Buffer Recording...
+            </span>
+          </div>
         )}
-      </Button>
+        
+        {/* Live Audio Transcription Display overlay */}
+        {(userAnswer || interimResult) && (
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-md flex flex-col justify-end p-8 z-20">
+             <div className="bg-background/90 p-4 rounded-sm border border-foreground/10 h-1/2 overflow-y-auto">
+               <span className="text-xs font-black tracking-widest uppercase text-primary mb-2 block">Voice Feed</span>
+               <p className="text-sm font-medium leading-relaxed text-foreground whitespace-pre-wrap">
+                 {userAnswer} <span className="text-foreground/50 italic">{interimResult}</span>
+               </p>
+             </div>
+          </div>
+        )}
+      </div>
+
+      <button
+        onClick={StartStopRecording}
+        disabled={loading}
+        className={`w-full max-w-sm py-5 rounded-sm border transition-all duration-500 flex items-center justify-center gap-4 group disabled:opacity-50
+            ${
+              isRecording
+                ? "bg-red-500/10 border-red-500/40 text-red-500 shadow-[0_0_40px_rgba(239,68,68,0.1)]"
+                : "bg-primary/5 border-primary/20 text-primary hover:border-primary/40 hover:bg-primary/10"
+            }`}
+      >
+        {isRecording ? (
+          <>
+            <CirclePause size={18} />
+            <span className="text-[10px] font-black tracking-[0.4em] uppercase">
+              Terminate Recording
+            </span>
+          </>
+        ) : (
+          <>
+            <Mic size={18} />
+            <span className="text-[10px] font-black tracking-[0.4em] uppercase">
+              Initialize Input Archive
+            </span>
+          </>
+        )}
+      </button>
     </div>
   );
 }

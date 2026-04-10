@@ -130,4 +130,4 @@ export function GridPattern({
   );
 }
 
-export default  GridPattern;
+export default GridPattern;

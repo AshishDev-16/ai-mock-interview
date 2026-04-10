@@ -1,135 +1,151 @@
-"use client"
+"use client";
 
 import { Card, CardContent } from "./ui/card";
 import { motion } from "framer-motion";
-import { 
-  History, 
-  Zap, 
-  BrainCircuit, 
-  Target, 
-  Smartphone, 
-  Sparkles 
+import {
+  History,
+  Zap,
+  BrainCircuit,
+  Target,
+  Smartphone,
+  Sparkles,
 } from "lucide-react";
 
 const features = [
-    {
-        "title": "Saved Transcripts",
-        "description": "All of your interviews are transcribed and saved for future reference.",
-        "icon": <History className="w-6 h-6 text-primary" />
-    },
-    {
-        "title": "Realtime Transcriptions",
-        "description": "Our transcriptions have a latency of less than 2 seconds, keeping the AI in sync.",
-        "icon": <Zap className="w-6 h-6 text-secondary" />
-    },
-    {
-        "title": "AI Growth Engine",
-        "description": "Our model learns from successful patterns to boost your 'selection' probability.",
-        "icon": <BrainCircuit className="w-6 h-6 text-primary" />
-    },
-    {
-        "title": "Role-Specific Precision",
-        "description": "Interview questions are dynamically optimized for your chosen position and role.",
-        "icon": <Target className="w-6 h-6 text-secondary" />
-    },
-    {
-        "title": "Cross-Device Mastery",
-        "description": "Prepare on any screen. Optimized for mobile, tablet, and desktop experiences.",
-        "icon": <Smartphone className="w-6 h-6 text-primary" />
-    },
-    {
-        "title": "Kinetic Feedback",
-        "description": "Receive tactical insights and score breakdowns to refine your performance.",
-        "icon": <Sparkles className="w-6 h-6 text-secondary" />
-    },
-]
+  {
+    title: "NEURAL ANALYSIS",
+    description:
+      "Deep learning models analyze tone, pacing, and sentiment in real-time.",
+    icon: <History className="w-5 h-5 flex-shrink-0" />,
+  },
+  {
+    title: "DYNAMIC ADAPTATION",
+    description:
+      "Difficulty scales dynamically based on your performance metrics.",
+    icon: <Zap className="w-5 h-5 flex-shrink-0" />,
+  },
+  {
+    title: "EXECUTIVE INSIGHTS",
+    description:
+      "Receive professional evaluation reports formatted for growth.",
+    icon: <BrainCircuit className="w-5 h-5 flex-shrink-0" />,
+  },
+  {
+    title: "LATENCY OPTIMIZED",
+    description:
+      "Zero-lag video and audio processing for realistic interaction.",
+    icon: <Target className="w-5 h-5 flex-shrink-0" />,
+  },
+  {
+    title: "ROLE PROTOCOLS",
+    description: "Sector-specific frameworks for Tech, Finance, and Strategy.",
+    icon: <Smartphone className="w-5 h-5 flex-shrink-0" />,
+  },
+  {
+    title: "SECURE TUNNEL",
+    description: "Enterprise-grade encryption for all preparation data.",
+    icon: <Sparkles className="w-5 h-5 flex-shrink-0" />,
+  },
+];
 
 const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.1
-        }
-    }
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
 };
 
 const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-        opacity: 1,
-        y: 0,
-        transition: {
-            duration: 0.6,
-            ease: "easeOut"
-        }
-    }
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  },
 };
 
 function Features() {
-    return (
-        <section id="features" className="relative px-6 py-24 sm:py-32 overflow-hidden">
-            {/* Background Accent */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[300px] bg-primary/5 blur-[120px] rounded-[100%] pointer-events-none" />
+  return (
+    <section
+      id="features"
+      className="relative px-6 py-24 sm:py-32 overflow-hidden"
+    >
+      {/* Background Accent */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[300px] bg-primary/5 blur-[120px] rounded-[100%] pointer-events-none" />
 
-            <div className="max-w-7xl mx-auto space-y-20 relative z-10">
-                <div className="text-center space-y-4">
-                    <motion.span 
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        className="text-primary font-bold tracking-widest text-xs uppercase"
-                    >
-                        Tactical Edge
-                    </motion.span>
-                    <motion.h2 
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        className="text-4xl md:text-6xl font-black tracking-tight text-foreground"
-                    >
-                        UNFAIR <span className="italic text-primary">ADVANTAGE</span>.
-                    </motion.h2>
-                    <motion.p 
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        className="text-foreground/50 text-lg max-w-2xl mx-auto font-medium"
-                    >
-                        Don&apos;t just prepare—simulate. Our tactical engine gives you the exact tools used by elite candidates to dominate interviews.
-                    </motion.p>
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 mb-24">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-2xl space-y-4"
+          >
+            <span className="text-[10px] font-black tracking-[0.4em] uppercase text-primary">
+              Capabilities Matrix
+            </span>
+            <h2 className="text-4xl md:text-7xl font-black tracking-tight text-foreground leading-[0.9]">
+              TACTICAL
+              <br />
+              SPECIFICATIONS.
+            </h2>
+          </motion.div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-foreground/30 text-sm md:text-base max-w-sm font-medium leading-relaxed tracking-tight"
+          >
+            A comprehensive suite of intelligence modules engineered to decrypt
+            the high-stakes interviewing process.
+          </motion.p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-foreground/[0.05] border border-foreground/[0.05]">
+          {features.map((item, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              className="group relative bg-card p-12 hover:bg-card/80 transition-all duration-500 overflow-hidden"
+            >
+              <div className="flex flex-col h-full space-y-10 relative z-10">
+                <div className="w-12 h-12 rounded-sm bg-foreground/[0.03] border border-foreground/[0.05] flex items-center justify-center text-primary-foreground/40 transition-all duration-500 group-hover:bg-primary/10 group-hover:text-primary group-hover:border-primary/25">
+                  {item.icon}
                 </div>
 
-                <motion.div 
-                    variants={containerVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-100px" }}
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                >
-                    {features.map((item, idx) => (
-                        <motion.div key={idx} variants={itemVariants}>
-                            <Card className="group relative bg-white/5 border-white/10 hover:border-primary/50 backdrop-blur-md transition-all duration-500 h-full overflow-hidden">
-                                {/* Subtle Hover Glow */}
-                                <div className="absolute -inset-2 bg-primary/20 opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-500 rounded-full h-20 w-20 top-0 left-0" />
-                                
-                                <CardContent className="p-8 space-y-6 relative z-10">
-                                    <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-primary/10 group-hover:border-primary/30 transition-all duration-500">
-                                        {item.icon}
-                                    </div>
-                                    <div className="space-y-2">
-                                        <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
-                                            {item.title}
-                                        </h3>
-                                        <p className="text-foreground/60 leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
-                                            {item.description}
-                                        </p>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        </motion.div>
-                    ))}
-                </motion.div>
-            </div>
-        </section>
-    )
+                <div className="space-y-4">
+                  <h3 className="text-xs font-black tracking-[0.25em] uppercase text-foreground group-hover:text-primary transition-colors duration-300">
+                    {item.title}
+                  </h3>
+                  <p className="text-foreground/20 text-[11px] font-medium leading-relaxed tracking-wider group-hover:text-foreground/40 transition-colors">
+                    {item.description}
+                  </p>
+                </div>
+
+                <div className="pt-6 mt-auto">
+                  <div className="w-0 h-[1px] bg-primary transition-all duration-700 group-hover:w-full opacity-50" />
+                </div>
+              </div>
+
+              {/* Tactical Corner Element */}
+              <div className="absolute top-0 right-0 w-6 h-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden">
+                <div className="absolute top-0 right-0 w-[1px] h-full bg-primary/40" />
+                <div className="absolute top-0 right-0 h-[1px] w-full bg-primary/40" />
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }
 
-export default Features
+export default Features;

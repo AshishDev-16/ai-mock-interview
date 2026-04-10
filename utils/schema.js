@@ -1,4 +1,4 @@
-import { pgTable, serial, text, varchar } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, varchar, integer } from "drizzle-orm/pg-core";
 
 export const MockInterview = pgTable('mockInterview',{
     id:serial('id').primaryKey(),
@@ -10,6 +10,7 @@ export const MockInterview = pgTable('mockInterview',{
     createdAt:varchar('createdAt').notNull(),
     mockId:varchar('mockId').notNull(),
     difficulty:varchar('difficulty').default('Medium'),
+    questionCount:varchar('questionCount').default('7'),
 })
 
 export const UserAnswer=pgTable('UserAnswer',{
@@ -22,4 +23,11 @@ export const UserAnswer=pgTable('UserAnswer',{
     rating:varchar('rating'),
     userEmail:varchar('userEmail'),
     createdAt:varchar('createdAt'),  
+})
+
+export const UserUsage = pgTable('userUsage', {
+    id: serial('id').primaryKey(),
+    userEmail: varchar('userEmail').notNull().unique(),
+    interviewCount: integer('interviewCount').default(0).notNull(),
+    createdAt: varchar('createdAt').notNull(),
 })
